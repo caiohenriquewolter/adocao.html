@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adoção de Animais</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      color: #222;
+      font-size: 18px;
+      margin: 0;
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    body.alto-contraste {
+      background: #000;
+      color: #fff;
+    }
+
+    .controles {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .controles button {
+      padding: 12px 20px;
+      margin: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #2c7a7b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .caixa {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+    }
+
+    body.alto-contraste .caixa {
+      background: #111;
+      border-color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c7a7b;
+      margin-bottom: 8px;
+    }
+
+    body.alto-contraste h1 {
+      color: #00e5ff;
+    }
+
+    .foto {
+      width: 100%;
+      max-width: 220px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto 12px;
+    }
+
+    .animais {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .animal {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    body.alto-contraste input,
+    body.alto-contraste select,
+    body.alto-contraste textarea {
+      background: #222;
+      color: #fff;
+      border-color: #fff;
+    }
+
+    textarea {
+      height: 90px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      margin-top: 24px;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      background: #2c7a7b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controles simples de acessibilidade -->
+  <div class="controles">
+    <button onclick="fonte(2)">A+</button>
+    <button onclick="fonte(-2)">A-</button>
+    <button onclick="contraste()">Alto Contraste</button>
+  </div>
+
+  <div class="caixa">
+    <h1>Adoção de Animais</h1>
+    <p style="text-align:center; margin-bottom:20px;">Escolha um amigo para a vida</p>
+
+    <!-- Imagens -->
+    <div class="animais">
+      <div class="animal">
+        <img class="foto" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop" alt="Cachorro fofo">
+        <strong>Cachorro</strong>
+      </div>
+      <div class="animal">
+        <img class="foto" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop" alt="Gato fofo">
+        <strong>Gato</strong>
+      </div>
+    </div>
+
+    <form onsubmit="alert('Formulário enviado! Obrigado.'); return false;">
+      
+      <label for="nome">Seu nome</label>
+      <input type="text" id="nome" required>
+
+      <label for="telefone">Telefone</label>
+      <input type="tel" id="telefone" required>
+
+      <label for="animal">Qual animal você quer?</label>
+      <select id="animal" required>
+        <option value="">Escolha</option>
+        <option value="cachorro">Cachorro</option>
+        <option value="gato">Gato</option>
+      </select>
+
+      <label for="motivo">Por que quer adotar?</label>
+      <textarea id="motivo"></textarea>
+
+      <button type="submit">Quero Adotar</button>
+    </form>
+  </div>
+
+  <script>
+    function fonte(tamanho) {
+      let atual = parseInt(window.getComputedStyle(document.body).fontSize);
+      document.body.style.fontSize = (atual + tamanho) + "px";
+    }
+
+    function contraste() {
+      document.body.classList.toggle("alto-contraste");
+    }
+  </script>
+
+</body>
+</html>
