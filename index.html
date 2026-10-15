@@ -22,11 +22,11 @@
 
     .controles {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .controles button {
-      padding: 12px 20px;
+      padding: 10px 16px;
       margin: 4px;
       font-size: 16px;
       font-weight: bold;
@@ -37,8 +37,45 @@
       cursor: pointer;
     }
 
+    /* Menu de Navegação */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #e2e8f0;
+      color: #2c7a7b;
+      border: 2px solid #2c7a7b;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    nav button.ativo, nav button:hover {
+      background: #2c7a7b;
+      color: white;
+    }
+
+    body.alto-contraste nav button {
+      background: #222;
+      color: #00e5ff;
+      border-color: #00e5ff;
+    }
+
+    body.alto-contraste nav button.ativo {
+      background: #00e5ff;
+      color: #000;
+    }
+
     .caixa {
-      max-width: 500px;
+      max-width: 800px;
       margin: 0 auto;
       background: white;
       padding: 24px;
@@ -51,36 +88,75 @@
       border-color: #fff;
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
       color: #2c7a7b;
       margin-bottom: 8px;
     }
 
-    body.alto-contraste h1 {
+    body.alto-contraste h1, 
+    body.alto-contraste h2 {
       color: #00e5ff;
+    }
+
+    /* Sistema de Telas */
+    .tela {
+      display: none;
+    }
+
+    .tela.ativa {
+      display: block;
+    }
+
+    /* Galeria de Animais */
+    .grid-animais {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card-animal {
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      background: #fafafa;
+    }
+
+    body.alto-contraste .card-animal {
+      background: #222;
+      border-color: #555;
     }
 
     .foto {
       width: 100%;
-      max-width: 220px;
-      height: 160px;
+      height: 180px;
       object-fit: cover;
-      border-radius: 12px;
-      display: block;
-      margin: 0 auto 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
     }
 
-    .animais {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin: 20px 0;
-      flex-wrap: wrap;
+    .btn-acao {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: #2c7a7b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .animal {
-      text-align: center;
+    .btn-secundario {
+      background: #4a5568;
+    }
+
+    /* Formuário */
+    .form-container {
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     label {
@@ -123,56 +199,204 @@
       border-radius: 10px;
       cursor: pointer;
     }
+
+    /* Modal de Detalhes */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .modal-conteudo {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    body.alto-contraste .modal-conteudo {
+      background: #111;
+      border: 2px solid #fff;
+    }
+
+    .mensagem-sucesso {
+      display: none;
+      background: #c6f6d5;
+      color: #22543d;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Controles simples de acessibilidade -->
+  <!-- Controles de acessibilidade -->
   <div class="controles">
     <button onclick="fonte(2)">A+</button>
     <button onclick="fonte(-2)">A-</button>
     <button onclick="contraste()">Alto Contraste</button>
   </div>
 
-  <div class="caixa">
-    <h1>Adoção de Animais</h1>
-    <p style="text-align:center; margin-bottom:20px;">Escolha um amigo para a vida</p>
+  <!-- Navegação por Telas -->
+  <nav>
+    <button id="btn-inicio" class="ativo" onclick="mudarTela('inicio')">Início</button>
+    <button id="btn-animais" onclick="mudarTela('animais')">Ver Animais</button>
+    <button id="btn-formulario" onclick="mudarTela('formulario')">Formulário de Adoção</button>
+  </nav>
 
-    <!-- Imagens -->
-    <div class="animais">
-      <div class="animal">
-        <img class="foto" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop" alt="Cachorro fofo">
-        <strong>Cachorro</strong>
-      </div>
-      <div class="animal">
-        <img class="foto" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop" alt="Gato fofo">
-        <strong>Gato</strong>
+  <div class="caixa">
+
+    <!-- TELA 1: INÍCIO -->
+    <div id="tela-inicio" class="tela ativa">
+      <h1>Adoção de Animais</h1>
+      <p style="text-align:center;">Encontre seu novo melhor amigo e mude uma vida hoje mesmo!</p>
+      
+      <div style="text-align: center; margin-top: 30px;">
+        <img class="foto" style="max-width: 400px; height: 240px; display: inline-block;" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop" alt="Cachorro e gato amigáveis">
+        <br><br>
+        <button class="btn-acao" style="max-width: 300px; font-size: 18px;" onclick="mudarTela('animais')">Conhecer Animais Disponíveis</button>
       </div>
     </div>
 
-    <form onsubmit="alert('Formulário enviado! Obrigado.'); return false;">
+    <!-- TELA 2: ANIMAIS DISPONÍVEIS -->
+    <div id="tela-animais" class="tela">
+      <h2>Animais Disponíveis</h2>
+      <p style="text-align:center;">Clique em um pet para saber mais ou iniciar o processo de adoção.</p>
+
+      <div class="grid-animais">
+        <!-- Rex -->
+        <div class="card-animal">
+          <img class="foto" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop" alt="Cachorro Rex">
+          <h3>Rex</h3>
+          <p><strong>Espécie:</strong> Cachorro</p>
+          <p><strong>Idade:</strong> 2 anos</p>
+          <button class="btn-acao btn-secundario" onclick="abrirModal('Rex', 'Cachorro', '2 anos', 'Macho', 'Rex é muito brincalhão, dócil e adora correr no parque.')">Ver Detalhes</button>
+          <button class="btn-acao" onclick="adotarPet('cachorro')">Adotar Rex</button>
+        </div>
+
+        <!-- Mia -->
+        <div class="card-animal">
+          <img class="foto" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop" alt="Gata Mia">
+          <h3>Mia</h3>
+          <p><strong>Espécie:</strong> Gato</p>
+          <p><strong>Idade:</strong> 1 ano</p>
+          <button class="btn-acao btn-secundario" onclick="abrirModal('Mia', 'Gato', '1 ano', 'Fêmea', 'Mia é carinhosa, calma e adora um colinho no fim da tarde.')">Ver Detalhes</button>
+          <button class="btn-acao" onclick="adotarPet('gato')">Adotar Mia</button>
+        </div>
+
+        <!-- Thor -->
+        <div class="card-animal">
+          <img class="foto" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=300&fit=crop" alt="Cachorro Thor">
+          <h3>Thor</h3>
+          <p><strong>Espécie:</strong> Cachorro</p>
+          <p><strong>Idade:</strong> 3 anos</p>
+          <button class="btn-acao btn-secundario" onclick="abrirModal('Thor', 'Cachorro', '3 anos', 'Macho', 'Thor é protetor, companheiro e já possui adestramento básico.')">Ver Detalhes</button>
+          <button class="btn-acao" onclick="adotarPet('cachorro')">Adotar Thor</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TELA 3: FORMULÁRIO -->
+    <div id="tela-formulario" class="tela">
+      <h2>Formulário de Adoção</h2>
       
-      <label for="nome">Seu nome</label>
-      <input type="text" id="nome" required>
+      <div id="mensagem-sucesso" class="mensagem-sucesso">
+        Solicitação enviada com sucesso! Entraremos em contato em breve.
+      </div>
 
-      <label for="telefone">Telefone</label>
-      <input type="tel" id="telefone" required>
+      <div class="form-container">
+        <form id="meuFormulario" onsubmit="enviarFormulario(event)">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" required placeholder="Digite seu nome completo">
 
-      <label for="animal">Qual animal você quer?</label>
-      <select id="animal" required>
-        <option value="">Escolha</option>
-        <option value="cachorro">Cachorro</option>
-        <option value="gato">Gato</option>
-      </select>
+          <label for="telefone">Telefone / WhatsApp</label>
+          <input type="tel" id="telefone" required placeholder="(00) 00000-0000">
 
-      <label for="motivo">Por que quer adotar?</label>
-      <textarea id="motivo"></textarea>
+          <label for="animal">Qual animal você quer adotar?</label>
+          <select id="animal" required>
+            <option value="">Escolha uma opção</option>
+            <option value="cachorro">Cachorro</option>
+            <option value="gato">Gato</option>
+          </select>
 
-      <button type="submit">Quero Adotar</button>
-    </form>
+          <label for="motivo">Por que quer adotar?</label>
+          <textarea id="motivo" placeholder="Conte um pouco sobre sua casa e rotina..."></textarea>
+
+          <button type="submit">Enviar Solicitação</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal com Detalhes do Animal -->
+  <div id="modal-detalhes" class="modal">
+    <div class="modal-conteudo">
+      <h3 id="modal-nome">Nome</h3>
+      <p><strong>Espécie:</strong> <span id="modal-especie"></span></p>
+      <p><strong>Idade:</strong> <span id="modal-idade"></span></p>
+      <p><strong>Sexo:</strong> <span id="modal-sexo"></span></p>
+      <p id="modal-descricao"></p>
+      <button class="btn-acao" onclick="fecharModal()">Fechar</button>
+    </div>
   </div>
 
   <script>
+    // Navegação entre Telas
+    function mudarTela(idTela) {
+      document.querySelectorAll('.tela').forEach(tela => tela.classList.remove('ativa'));
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('ativo'));
+
+      document.getElementById('tela-' + idTela).classList.add('ativa');
+      document.getElementById('btn-' + idTela).classList.add('ativo');
+    }
+
+    // Pré-seleciona animal no formulário ao clicar em Adotar
+    function adotarPet(especie) {
+      document.getElementById('animal').value = especie;
+      mudarTela('formulario');
+    }
+
+    // Modal de Detalhes
+    function abrirModal(nome, especie, idade, sexo, descricao) {
+      document.getElementById('modal-nome').innerText = nome;
+      document.getElementById('modal-especie').innerText = especie;
+      document.getElementById('modal-idade').innerText = idade;
+      document.getElementById('modal-sexo').innerText = sexo;
+      document.getElementById('modal-descricao').innerText = descricao;
+      document.getElementById('modal-detalhes').style.display = 'flex';
+    }
+
+    function fecharModal() {
+      document.getElementById('modal-detalhes').style.display = 'none';
+    }
+
+    // Envio do Formulário
+    function enviarFormulario(event) {
+      event.preventDefault();
+      const msg = document.getElementById('mensagem-sucesso');
+      msg.style.display = 'block';
+      document.getElementById('meuFormulario').reset();
+      
+      setTimeout(() => {
+        msg.style.display = 'none';
+      }, 4000);
+    }
+
+    // Acessibilidade
     function fonte(tamanho) {
       let atual = parseInt(window.getComputedStyle(document.body).fontSize);
       document.body.style.fontSize = (atual + tamanho) + "px";
